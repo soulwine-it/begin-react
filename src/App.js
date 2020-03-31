@@ -4,8 +4,8 @@ import "./App.css";
 import Wrapper from "./Wrapper.js";
 import Counter from "./Counter.js";
 import InputSample from "./InputSample.js";
-function App() {
-  return <InputSample></InputSample>;
-}
 
+function App() {
+  return <InputSample />;
+}
 export default App;
