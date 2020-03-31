@@ -1,35 +1,69 @@
-import React, { userRef } from "react";
+import React, { useRef, useState } from "react";
 import Hello from "./Hello.js";
 import "./App.css";
 import Wrapper from "./Wrapper.js";
 import Counter from "./Counter.js";
 import InputSample from "./InputSample.js";
 import UserList from "./UserList.js";
+import CreateUser from "./CreateUser.js";
 
 function App() {
-  const users = [
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: ""
+  });
+  const { username, email } = inputs;
+  const onChange = e => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value
+    });
+  };
+  const [users, setUsers] = useState([
     {
       id: 1,
-      username: "sh",
-      email: "sh@gmail.com"
+      username: "velopert",
+      email: "public.velopert@gmail.com"
     },
     {
       id: 2,
-      username: "js",
-      email: "js@mgail.com"
+      username: "tester",
+      email: "tester@example.com"
     },
     {
       id: 3,
-      username: "hs",
-      email: "hs@gmail.com"
+      username: "liz",
+      email: "liz@example.com"
     }
-  ];
+  ]);
 
-  const nextId = userRef(4);
+  const nextId = useRef(4);
   const onCreate = () => {
-    console.log(nextId.current);
+    const user = {
+      id: nextId.current,
+      username,
+      email
+    };
+    setUsers([...users, user]);
+
+    setInputs({
+      username: "",
+      email: ""
+    });
     nextId.current += 1;
   };
-  return <UserList users={users} />;
+  return (
+    <>
+      <CreateUser
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
+      <UserList users={users} />
+    </>
+  );
 }
+
 export default App;
